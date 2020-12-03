@@ -1,0 +1,23 @@
+muColorfulSnow.fx の　10-25行目　を、下記で置き換えた後、
+コントローラーとvmdを読み込んでください
+
+----------------------
+
+// テクスチャ
+// 同じ種類の柄にしたい場合、同じファイル名を指定して下さい。
+#define TEX1_FILENAME "tex/水滴1.png"
+#define TEX2_FILENAME "tex/水滴1.png"
+#define TEX3_FILENAME "tex/水滴1.png"
+#define TEX4_FILENAME "tex/水滴1.png"
+#define TEX5_FILENAME "tex/水滴1.png"
+
+// テクスチャ別色相
+// テクスチャ別に色を指定したい場合、粒子色相のルールに従って指定して下さい。
+// またはコントローラーやParticleHueの色に準じる場合、全てに0を指定して下さい。
+#define TEX1_HUE 0
+#define TEX2_HUE 0
+#define TEX3_HUE 0
+#define TEX4_HUE 0
+#define TEX5_HUE 0
+
+----------------------

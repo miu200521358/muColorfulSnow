@@ -1,0 +1,207 @@
+muColorfulSnow.fx の　10-213行目　を、下記で置き換えてください
+
+----------------------
+// テクスチャ
+// 同じ種類の柄にしたい場合、同じファイル名を指定して下さい。
+#define TEX1_FILENAME "tex/ハート1.png"
+#define TEX2_FILENAME "tex/スペード1.png"
+#define TEX3_FILENAME "tex/ダイヤ1.png"
+#define TEX4_FILENAME "tex/クローバー1.png"
+#define TEX5_FILENAME "tex/王冠1.png"
+
+// テクスチャ別色相
+// テクスチャ別に色を指定したい場合、粒子色相のルールに従って指定して下さい。
+// またはコントローラーやParticleHueの色に準じる場合、全てに0を指定して下さい。
+#define TEX1_HUE 1
+#define TEX2_HUE 0.6
+#define TEX3_HUE 0.16
+#define TEX4_HUE 0.3
+#define TEX5_HUE 0.85
+
+//粒子色相
+// 0: 色相ランダム
+// ～1: 赤-橙(0.1)-黄(0.16)-緑(0.3)-水(0.5)-青(0.6)-紫(0.75)-桃(0.85)-赤(1)
+float ParticleHue
+<
+   string UIName = "ParticleHue";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 0;
+   int UIMax = 1;
+> = 0;
+
+//粒子彩度
+// 0: 彩度ランダム
+// ～1: 値が大きいほど彩度が強くなる（鮮やかになる）
+float ParticleSaturation
+<
+   string UIName = "ParticleSaturation";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 0;
+   int UIMax = 1;
+> = 0.3;
+
+//粒子明度
+// 0: 明度ランダム
+// ～1: 値が大きいほど明度が強くなる(淡くなる)
+float ParticleValue
+<
+   string UIName = "ParticleValue";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 0;
+   int UIMax = 1;
+> = 1;
+
+//粒子色
+float3 ParticleColor
+<
+   string UIName = "ParticleColor";
+   string UIWidget = "Color";
+   bool UIVisible =  true;
+> = float3(0.5,0.5,1);
+
+//粒子表示数
+int count
+<
+   string UIName = "count";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 1;
+   int UIMax = 30000;
+> = 4000;
+
+//表示領域
+float AreaSize
+<
+   string UIName = "AreaSize";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 50;
+   int UIMax = 2000;
+> = 350;
+
+//落下方向
+//0: 上から下, 0.25: 下から上, 0.5: 左から右, 0.75: 右から左
+float Direction
+<
+   string UIName = "Direction";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0;
+   float UIMax = 1;
+> = 0;
+
+//落下速度
+float Speed
+<
+   string UIName = "Speed";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 250.0;
+> = 5;
+
+//パーティクルサイズ
+float ParticleSize
+<
+   string UIName = "ParticleSize";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 30.0;
+> = 30.0;
+
+//落下軌道のゆらぎ
+float NoizeLevel
+<
+   string UIName = "NoizeLevel";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 4.0;
+> = 0;
+
+//ゆらぎ速度
+float NoizeSpeed
+<
+   string UIName = "NoizeSpeed";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 4.0;
+> = 0.5;
+
+//テクスチャの回転制限
+//0: 回転しない　～ 0.5: 半円分だけ回転 ～　1:360度回転
+float RotationLimit
+<
+   string UIName = "RotationLimit";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0.2;
+
+//テクスチャの回転速度
+float RotationSpeed
+<
+   string UIName = "RotationSpeed";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 20.0;
+> = 2;
+
+//回転ゆらぎ
+float RotationNoize
+<
+   string UIName = "RotationNoize";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 3.0;
+> = 0.2;
+
+
+//サイズゆらぎ
+float Flicker
+<
+   string UIName = "Flicker";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0;
+
+//サイズゆらぎ速度
+float FlickerSpeed
+<
+   string UIName = "FlickerSpeed";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0.6;
+
+//ブラー
+float Blur
+<
+   string UIName = "Blur";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0.0;
+
+//強調
+float AlphaAppend
+<
+   string UIName = "AlphaAppend";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 4.0;
+> = 3;
+----------------------
