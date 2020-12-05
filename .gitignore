@@ -3,4 +3,5 @@ __pycache__/
 dist/
 past/
 配布/
+動画用/
 *.zip

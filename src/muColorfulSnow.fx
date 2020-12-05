@@ -12,8 +12,8 @@
 #define TEX1_FILENAME "tex/花1.png"
 #define TEX2_FILENAME "tex/花2.png"
 #define TEX3_FILENAME "tex/花3.png"
-#define TEX4_FILENAME "tex/葉1.png"
-#define TEX5_FILENAME "tex/葉2.png"
+#define TEX4_FILENAME "tex/花1.png"
+#define TEX5_FILENAME "tex/花2.png"
 
 // テクスチャ別色相
 // テクスチャ別に色を指定したい場合、粒子色相のルールに従って指定して下さい。
@@ -140,7 +140,7 @@ float RotationLimit
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 1.0;
-> = 0.2;
+> = 1;
 
 //テクスチャの回転速度
 float RotationSpeed
@@ -171,7 +171,7 @@ float Flicker
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 1.0;
-> = 0;
+> = 1;
 
 //サイズゆらぎ速度
 float FlickerSpeed
@@ -192,6 +192,16 @@ float Blur
    float UIMin = 0.0;
    float UIMax = 1.0;
 > = 0.0;
+
+//透過
+float Transparent
+<
+   string UIName = "Transparent";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0;
 
 //強調
 float AlphaAppend
@@ -358,7 +368,7 @@ float Flicker_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; s
 float Blur_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "ブラー"; >;
 
 float TextureSelect : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "ﾃｸｽﾁｬ"; >;
-float Transparent : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "透過"; >;
+float Transparent_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "透過"; >;
 float AlphaAppend_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "強調"; >;
 
 float ParticleHue_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "色相"; >;
@@ -380,6 +390,7 @@ static float RotationLimit_m = flag1 ? RotationLimit_e : RotationLimit;
 static float RotationSpeed_m = flag1 ? (RotationSpeed_e * 10) : RotationSpeed;
 static float RotationNoize_m = flag1 ? RotationNoize_e : RotationNoize;
 static float Blur_m = flag1 ? Blur_e : Blur;
+static float Transparent_m = flag1 ? Transparent_e : Transparent;
 static float AlphaAppend_m = flag1 ? (AlphaAppend_e * 4) : AlphaAppend;
 
 
@@ -423,9 +434,9 @@ float4 getRandomRGB(float rindex)
 {
     // 一旦値を大きくした後、余りで指定段階に分割して、HSVを生成
     // コントローラーのあるなしでちらちら度合いが変わるので、とりあえず分離
-    float4 rnd_h = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10010));
-    float4 rnd_s = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10010));
-    float4 rnd_v = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10010));
+    float4 rnd_h = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10011));
+    float4 rnd_s = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10011));
+    float4 rnd_v = getRandom(((flag1) ? int(rindex) * 10 : rindex * 10011));
     float3 hsv = (float3)0;
 
     float index = rindex * 10 % 5;
@@ -605,7 +616,7 @@ VS_OUTPUT WPEngine_VS(float4 Pos : POSITION, float2 Tex : TEXCOORD0, uniform boo
     
     //アルファ適用
     Out.Alpha *= ParticleFade(particle_pos);
-    Out.Alpha *= alpha1 * (1 - Transparent);
+    Out.Alpha *= alpha1 * (1 - Transparent_m);
     Out.Alpha *= 1 + AlphaAppend_m;
     
     // テクスチャ座標

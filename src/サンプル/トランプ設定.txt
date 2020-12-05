@@ -1,4 +1,5 @@
-muColorfulSnow.fx の　10-213行目　を、下記で置き換えてください
+muColorfulSnow.fx の　10-214行目　を、下記で置き換えてください。
+※トランプ設定だけは、テクスチャ別色相の指定が必要なため、vmdサンプルは入っておりません。
 
 ----------------------
 // テクスチャ
@@ -40,7 +41,7 @@ float ParticleSaturation
    bool UIVisible =  true;
    int UIMin = 0;
    int UIMax = 1;
-> = 0.3;
+> = 0.8;
 
 //粒子明度
 // 0: 明度ランダム
@@ -70,7 +71,7 @@ int count
    bool UIVisible =  true;
    int UIMin = 1;
    int UIMax = 30000;
-> = 4000;
+> = 3000;
 
 //表示領域
 float AreaSize
@@ -91,7 +92,7 @@ float Direction
    bool UIVisible =  true;
    float UIMin = 0;
    float UIMax = 1;
-> = 0;
+> = 0.25;
 
 //落下速度
 float Speed
@@ -101,7 +102,7 @@ float Speed
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 250.0;
-> = 5;
+> = 2;
 
 //パーティクルサイズ
 float ParticleSize
@@ -173,7 +174,7 @@ float Flicker
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 1.0;
-> = 0;
+> = 0.8;
 
 //サイズゆらぎ速度
 float FlickerSpeed
@@ -193,7 +194,17 @@ float Blur
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 1.0;
-> = 0.0;
+> = 0.8;
+
+//透過
+float Transparent
+<
+   string UIName = "Transparent";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   float UIMin = 0.0;
+   float UIMax = 1.0;
+> = 0;
 
 //強調
 float AlphaAppend
@@ -203,5 +214,6 @@ float AlphaAppend
    bool UIVisible =  true;
    float UIMin = 0.0;
    float UIMax = 4.0;
-> = 3;
+> = 0;
+
 ----------------------
