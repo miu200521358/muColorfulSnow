@@ -9,11 +9,11 @@
 
 // テクスチャ
 // 同じ種類の柄にしたい場合、同じファイル名を指定して下さい。
-#define TEX1_FILENAME "tex/花1.png"
-#define TEX2_FILENAME "tex/花2.png"
-#define TEX3_FILENAME "tex/花3.png"
-#define TEX4_FILENAME "tex/花1.png"
-#define TEX5_FILENAME "tex/花2.png"
+#define TEX1_FILENAME "tex/宝石1.png"
+#define TEX2_FILENAME "tex/宝石2.png"
+#define TEX3_FILENAME "tex/宝石3.png"
+#define TEX4_FILENAME "tex/宝石4.png"
+#define TEX5_FILENAME "tex/宝石5.png"
 
 // テクスチャ別色相
 // テクスチャ別に色を指定したい場合、粒子色相のルールに従って指定して下さい。
@@ -46,7 +46,7 @@ float ParticleSaturation
    bool UIVisible =  true;
    int UIMin = 0;
    int UIMax = 1;
-> = 0.4;
+> = 0.3;
 
 //粒子明度
 // 0: 明度ランダム
@@ -59,6 +59,28 @@ float ParticleValue
    int UIMin = 0;
    int UIMax = 1;
 > = 1;
+
+//粒子彩度底上げ値
+// ランダム明度を少し鮮やかに表示したい場合、値を指定してください。
+float ParticleSaturationBottom
+<
+   string UIName = "ParticleSaturationBottom";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 0;
+   int UIMax = 1;
+> = 0;
+
+//粒子明度底上げ値
+// ランダム明度を少し明るめに表示したい場合、値を指定してください。
+float ParticleValueBottom
+<
+   string UIName = "ParticleValueBottom";
+   string UIWidget = "Slider";
+   bool UIVisible =  true;
+   int UIMin = 0;
+   int UIMax = 1;
+> = 0;
 
 //粒子表示数
 int count
@@ -374,6 +396,8 @@ float AlphaAppend_e : CONTROLOBJECT < string name = "WorldParticleController.pmx
 float ParticleHue_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "色相"; >;
 float ParticleSaturation_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "彩度"; >;
 float ParticleValue_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "明度"; >;
+float ParticleSaturationBottom_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "彩度↑"; >;
+float ParticleValueBottom_e : CONTROLOBJECT < string name = "WorldParticleController.pmx"; string item = "明度↑"; >;
 
 
 static float count_m = flag1 ? (count_e * 30000) : count;
@@ -392,6 +416,8 @@ static float RotationNoize_m = flag1 ? RotationNoize_e : RotationNoize;
 static float Blur_m = flag1 ? Blur_e : Blur;
 static float Transparent_m = flag1 ? Transparent_e : Transparent;
 static float AlphaAppend_m = flag1 ? (AlphaAppend_e * 4) : AlphaAppend;
+static float ParticleSaturationBottom_m = flag1 ? ParticleSaturationBottom_e : ParticleSaturationBottom;
+static float ParticleValueBottom_m = flag1 ? ParticleValueBottom_e : ParticleValueBottom;
 
 
 // 表示領域中心
@@ -470,14 +496,16 @@ float4 getRandomRGB(float rindex)
     // 0以下マイナス値の場合、乱数採用（0の場合、乱数のみ）
     // プラス値の場合、固定値としてそのまま採用
     // コントローラーが認識されている場合、コントローラーの値を取得
+    // 明度はランダムだと結構暗くなっちゃうので、底上げ
     if (flag1) {
-        hsv.y = (ParticleSaturation_e <= 0)  ? rnd_s.x : ParticleSaturation_e;
-        hsv.z = (ParticleValue_e <= 0)       ? rnd_v.x : ParticleValue_e;
+        hsv.y = (ParticleSaturation_e <= 0)  ? rnd_s.x + ParticleSaturationBottom_e : ParticleSaturation_e;
+        hsv.z = (ParticleValue_e <= 0)       ? rnd_v.x + ParticleValueBottom_e      : ParticleValue_e;
     }
     else {
-        hsv.y = (ParticleSaturation <= 0)    ? rnd_s.x : ParticleSaturation;
-        hsv.z = (ParticleValue <= 0)         ? rnd_v.x : ParticleValue;
+        hsv.y = (ParticleSaturation <= 0)    ? rnd_s.x + ParticleSaturationBottom   : ParticleSaturation;
+        hsv.z = (ParticleValue <= 0)         ? rnd_v.x + ParticleValueBottom        : ParticleValue;
     }
+    hsv.yz = saturate(hsv.yz);
 
     // HSVをRGBに変換
     float3 rgb = HSVtoRGB(hsv);
